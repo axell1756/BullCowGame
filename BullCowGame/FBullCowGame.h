@@ -11,6 +11,7 @@ struct FBullCowCount {
 };
 
 enum class EGuessStatus {
+	Invalid_Status,
 	OK,
 	Wrong_Length,
 	Not_An_Isogram,
@@ -30,7 +31,7 @@ public:
 	bool IsGameWon() const;
 
 	void Reset(); // TODO make return richer
-	FBullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitValidGuess(FString);
 
 private:
 
@@ -38,5 +39,6 @@ private:
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bIsGameWon;
 
 };

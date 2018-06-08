@@ -5,13 +5,12 @@ using int32 = int;
 FBullCowGame::FBullCowGame() {Reset();}
 
 int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
-
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
-
 int32 FBullCowGame::GetHiddenWordLenth() const { return MyHiddenWord.length(); }
-
+bool FBullCowGame::IsGameWon() const { return bIsGameWon; }
 
 void FBullCowGame::Reset() {
+	bIsGameWon = false;
 	const FString HIDDEN_WORD = "planet";
 	constexpr int32 MAX_TRIES = 8;
 
@@ -23,13 +22,12 @@ void FBullCowGame::Reset() {
 	return;
 }
 
-bool FBullCowGame::IsGameWon() const { return false; }
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 
-	if (false) { // not an isogram
+	if (false) { // TODO not an isogram
 		return EGuessStatus::Not_An_Isogram;
-	} else if (false) { // not lower case
+	} else if (false) { // TODO not lower case
 		return EGuessStatus::Not_Lowercase;
 	} else if (Guess.length() != GetHiddenWordLenth()) { // wrong length
 		return EGuessStatus::Wrong_Length;
@@ -40,18 +38,16 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 }
 
 // counts bulls and cows and increase MyCurrentTurn on a valid guess
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
-	// increment the turn value
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess) {
+
 	MyCurrentTry++;
 
-	// setup a return value
 	FBullCowCount BullCowCount;
-	int32 HiddenWordLength = MyHiddenWord.length();
+	int32 WordLength = MyHiddenWord.length();
 
-	// loop through all the letters in a guess and compare to the hidden word
-	for (int32 MHWChar = 0; MHWChar < HiddenWordLength; MHWChar++) {
-		// compare letters agains the hidden word
-		for (int32 GChar = 0; GChar < HiddenWordLength; GChar++) {
+	// loop through all the letters in the hidden word and compare to guess
+	for (int32 MHWChar = 0; MHWChar < WordLength; MHWChar++) {
+		for (int32 GChar = 0; GChar < WordLength; GChar++) {
 			// if they match
 			if (Guess[GChar] == MyHiddenWord[MHWChar]) {
 				// if they are in the same place
@@ -64,5 +60,7 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
 		}
 	}
 
+	(Guess == MyHiddenWord) ? bIsGameWon = true : bIsGameWon = false;
+	
 	return BullCowCount;
 }
