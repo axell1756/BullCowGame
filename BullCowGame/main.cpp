@@ -9,6 +9,7 @@
 #include "FBullCowGame.h"
 
 using FText = std::string;
+
 using int32 = int;
 
 void PrintIntro();
@@ -32,6 +33,12 @@ int main() {
 void PrintIntro() {
 
 	// Introduction of the game
+	std::cout << std::endl;
+	std::cout << " ((...))               L...L" << "\n";
+	std::cout << " ( O O )              < o o >" << "\n";
+	std::cout << "  \\   /                \\   / " << "\n";
+	std::cout << "  (`_`)                 ^_^ " << "\n";
+	std::cout << std::endl;
 
 	printf("Welcome to Bulls and Cows!\nCan you guess the %i letter isogram I am thinking off?\n", BCGame.GetHiddenWordLenth());
 	std::cout << std::endl;
@@ -55,6 +62,7 @@ void PlayGame() {
 		std::cout << "Bulls = " << BullCowCount.Bulls;
 		std::cout << ". Cows = " << BullCowCount.Cows;
 		std::cout << std::endl;
+		std::cout << std::endl;
 
 	};
 
@@ -70,9 +78,9 @@ FText GetValidGuess() {
 	do {
 
 		int32 CurrentTry = BCGame.GetCurrentTry();
-
+		int32 MaxTries = BCGame.GetMaxTries();
 		//Get a user input
-		printf("Try %i. Enter your guess: ", CurrentTry);
+		printf("Try %i out of %i. Enter your guess: ", CurrentTry, MaxTries);
 		std::getline(std::cin, Guess);
 
 		Status = BCGame.CheckGuessValidity(Guess);
@@ -80,18 +88,21 @@ FText GetValidGuess() {
 		switch (Status) {
 		case EGuessStatus::Wrong_Length:
 			printf("Please, enter %i letters long word. \n", BCGame.GetHiddenWordLenth());
+			std::cout << std::endl;
 			break;
 		case EGuessStatus::Not_An_Isogram:
-			printf("%s is not an isogram, please use isograms only. \n", Guess);
+			printf("That is not an isogram, please use isograms only. \n", Guess);
+			std::cout << std::endl;
 			break;
 		case EGuessStatus::Not_Lowercase:
 			std::cout << "Please, use lowercase only. \n";
+			std::cout << std::endl;
 			break;
 		default:
 			break;
 		}
 	} while (Status != EGuessStatus::OK);
-
+	
 	return Guess;
 }
 
