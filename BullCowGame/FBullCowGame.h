@@ -30,7 +30,7 @@ public:
 	int32 GetHiddenWordLenth() const;
 	bool IsGameWon() const;
 
-	void Reset(); // TODO make return richer
+	void Reset();
 	FBullCowCount SubmitValidGuess(FString);
 
 private:

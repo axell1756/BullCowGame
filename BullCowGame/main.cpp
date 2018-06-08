@@ -1,17 +1,19 @@
-/************************************************************** 
+/****************************************************************** 
 	This is the console executable, that makes use of classes.
 	This Acts as the vies in MVS pattern and is responsible 
 	for user interactions. For game logic, see FBullCowGame.cpp
-***************************************************************/
+*******************************************************************/
 
+#pragma once
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 
+//Unreal Engine 4 friendly syntax
 using FText = std::string;
-
 using int32 = int;
 
+// function prototypes
 void PrintIntro();
 void PlayGame();
 void PrintGameSummary();
@@ -20,6 +22,7 @@ bool AskToPlayAgain();
 
 FBullCowGame BCGame; // instantiate a new game
 
+// entry point to the game
 int main() {
 
 	do {
@@ -46,6 +49,7 @@ void PrintIntro() {
 
 };
 
+// main game loop
 void PlayGame() {
 
 	BCGame.Reset();
@@ -70,6 +74,7 @@ void PlayGame() {
 	return;
 };
 
+// guess validation method
 FText GetValidGuess() {
 
 	FText Guess = "";
@@ -101,6 +106,7 @@ FText GetValidGuess() {
 		default:
 			break;
 		}
+
 	} while (Status != EGuessStatus::OK);
 	
 	return Guess;
@@ -119,11 +125,6 @@ bool AskToPlayAgain() {
 }
 
 void PrintGameSummary() {
-
-	if (BCGame.IsGameWon() == true) {
-		std::cout << "Congratulations! You successfully guessed the word!" << "\n";
-	} else {
-		std::cout << "Better luck next time!" << "\n";
-	}
+	(BCGame.IsGameWon() == true) ? std::cout << "Congratulations! You successfully guessed the word!" << "\n" : std::cout << "Better luck next time!" << "\n";
 	return;
 }

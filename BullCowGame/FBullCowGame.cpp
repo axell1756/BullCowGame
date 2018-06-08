@@ -1,7 +1,9 @@
+#pragma once
 #include "FBullCowGame.h"
 #include <map>
-#define TMap std::map
 
+//Unreal Engine 4 friendly syntax
+#define TMap std::map
 using int32 = int;
 
 FBullCowGame::FBullCowGame() {Reset();}
@@ -11,8 +13,11 @@ int32 FBullCowGame::GetHiddenWordLenth() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bIsGameWon; }
 
 int32 FBullCowGame::GetMaxTries() const {
+
 	TMap<int32, int32> WordLengthToMaxTries{ { 3,5 },{ 4,7 },{ 5,10 },{ 6,12 } };
+
 	return WordLengthToMaxTries[MyHiddenWord.length()];
+
 }
 
 void FBullCowGame::Reset() {
@@ -20,9 +25,7 @@ void FBullCowGame::Reset() {
 
 	//TODO add isogram array for user to chose the difficulty depending on length of isogram
 	const FString HIDDEN_WORD = "planet";
-
 	MyHiddenWord = HIDDEN_WORD;
-
 	MyCurrentTry = 1;
 
 	return;
@@ -43,7 +46,7 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 
 }
 
-// counts bulls and cows and increase MyCurrentTurn on a valid guess
+// counts bulls and cows and increases MyCurrentTurn on a valid guess
 FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess) {
 
 	MyCurrentTry++;
@@ -78,7 +81,6 @@ bool FBullCowGame::IsIsogram(FString Word) const {
 
 	for (auto Letter : Word) {
 		Letter = tolower(Letter);
-
 		if (!LetterSeen[Letter]) { 
 			LetterSeen[Letter] = true; 
 		} else {
@@ -103,4 +105,3 @@ bool FBullCowGame::IsLowercase(FString Word) const {
 
 	return true;
 }
-
