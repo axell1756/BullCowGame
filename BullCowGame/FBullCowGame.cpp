@@ -6,18 +6,22 @@ using int32 = int;
 
 FBullCowGame::FBullCowGame() {Reset();}
 
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLenth() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bIsGameWon; }
 
+int32 FBullCowGame::GetMaxTries() const {
+	TMap<int32, int32> WordLengthToMaxTries{ { 3,5 },{ 4,7 },{ 5,10 },{ 6,12 } };
+	return WordLengthToMaxTries[MyHiddenWord.length()];
+}
+
 void FBullCowGame::Reset() {
 	bIsGameWon = false;
+
+	//TODO add isogram array for user to chose the difficulty depending on length of isogram
 	const FString HIDDEN_WORD = "planet";
-	constexpr int32 MAX_TRIES = 8;
 
 	MyHiddenWord = HIDDEN_WORD;
-	MyMaxTries = MAX_TRIES;
 
 	MyCurrentTry = 1;
 
